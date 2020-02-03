@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 
 
@@ -12,7 +13,7 @@ export default function Landing(props) {
         </section>
         <section>
           <h3>How It Works</h3>
-         <p><em>[placeholder for screenshot of child entry page]</em></p>
+         <p><Link to="/Home"><button>Demo!</button></Link></p>
         <p>After you sign up, enter each of your children. Then add their friends! Add parents' names, phone numbers, birthdays, siblings, allergy info, personal notes, etc! Now all of that information, right at your fingertips!</p>
         </section>
         <section>
