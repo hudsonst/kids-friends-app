@@ -48,7 +48,7 @@ class EditKid extends Component {
             notes: notes.value,
             friends: kid.friends,
         }
-        this.context.editKid(updatedKid, kid.id)
+        this.context.editKid(updatedKid)
         this.props.history.push('/Home')
     }
 

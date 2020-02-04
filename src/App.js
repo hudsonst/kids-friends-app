@@ -31,72 +31,72 @@ class App extends Component {
 
   deleteKid = kid => {
     const { kids } = this.state
-    const currentKid = kids.find(ckid => ckid.id === kid.id)
-    const newKids = kids.filter(kid => currentKid !== kid)
+    const newKids = kids.filter(ckid => ckid !== kid)
     this.setState({
-      kids: [...newKids],
+      kids: newKids
     })
   }
 
   deleteFriend = friend => {
     const { kids, friends } = this.state
-    const currentfriend = friends.find(cfriend => cfriend.id === friend.id)
-    const newFriends = friends.filter(friend => currentfriend !== friend)
+
+    const newFriends = friends.filter(cfriend => cfriend !== friend)
 
     //Also need to remove friend from Kids array
-    let finalKidsArr = [...kids]
+
     kids.forEach(kid => {
-      const friendArr = kid.friends.filter(ofriend => ofriend !== friend.id)
-      if (JSON.stringify(friendArr) !== JSON.stringify(kid.friends)) {
-        const newKid = { ...kid, friends: friendArr }
-        //remove old version of kid from array. 
-        //Use finalKidsArr as a mutable copy of the kids array
-        const newKids = finalKidsArr.filter(kid => kid.id !== newKid.id)
-        finalKidsArr = [...newKids, newKid]
-      }
+      kid.friends = kid.friends.filter(cfriend => cfriend !== friend.id)
     }
     )
 
     this.setState({
-      kids: [...finalKidsArr],
+      kids,
       friends: [...newFriends]
     })
   }
 
   addFriend = (friend, kid) => {
     const { kids, friends } = this.state
-    const currentKid = kids.find(ckid => ckid.id === kid.id)
-    const newKids = kids.filter(kid => currentKid !== kid)
-    const newFriendsArr = currentKid.friends.concat(friend.id)
-    const updatedKid = { ...currentKid, friends: newFriendsArr }
+    const kidsArray = kids.map(ckid => {
+      if (ckid.id === kid.id) {
+        ckid.friends = ckid.friends.concat(friend.id)
+      }
+      return ckid
+    })
+
     this.setState({
-      kids: [...newKids, updatedKid],
+      kids: kidsArray,
       friends: [friend, ...friends],
     })
   }
 
-  editKid = (updatedKid, kid_id) => {
-    kid_id = Number(kid_id);
+  editKid = (updatedKid) => {
 
-    const newKids = this.state.kids.filter(kid =>
-      kid.id !== kid_id
-    )
-    console.log(newKids)
+    const newKids = this.state.kids.map(ckid => {
+      if (ckid.id === updatedKid.id) {
+        ckid = updatedKid
+      }
+      return ckid
+    })
+
+
     this.setState({
-      kids: [...newKids, updatedKid],
+      kids: newKids
     })
 
   }
 
-  editFriend = (updatedFriend, friend_id) => {
-    friend_id = Number(friend_id);
+  editFriend = (updatedFriend) => {
 
-    const newFriends = this.state.friends.filter(friend =>
-      friend.id !== friend_id
+    const newFriends = this.state.friends.map(cfriend => {
+      if (cfriend.id === updatedFriend.id) {
+          cfriend = updatedFriend
+      }
+      return cfriend
+    }
     )
-    console.log(newFriends)
     this.setState({
-      friends: [...newFriends, updatedFriend],
+      friends: newFriends
     })
 
   }

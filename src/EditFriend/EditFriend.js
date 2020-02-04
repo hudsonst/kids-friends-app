@@ -56,7 +56,7 @@ class EditFriend extends Component {
             notes: notes.value,
             friends: friend.friends,
         }
-        this.context.editFriend(updatedFriend, friend.id)
+        this.context.editFriend(updatedFriend)
         this.props.history.push({
             pathname: `/friend/${friend.id}`,
             state: { kid: kid, friend: updatedFriend }
