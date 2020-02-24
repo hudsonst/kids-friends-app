@@ -61,6 +61,59 @@ class EditFriend extends Component {
             pathname: `/friend/${friend.id}`,
             state: { kid: kid, friend: updatedFriend }
         })
+            })
+    }
+
+
+    handleSibling = e => {
+        e.preventDefault()
+        const { newSiblings } = e.target
+        const { kid, friend } = this.props.location.state
+
+        const newSiblingsArr = newSiblings.value.split(",")
+        const siblingArr = newSiblingsArr.map(sib => { return { name: sib } })
+        siblingArr.forEach(newSibling => {
+            fetch(`${config.API_ENDPOINT}/api/friends/siblings/${friend.id}`, {
+                method: 'POST',
+                body: JSON.stringify(newSibling),
+                headers: {
+                    'content-type': 'application/json',
+                }
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        return res.json().then(error => {
+                            throw error
+                        })
+                    }
+                    return res.json()
+                })
+                .then(data => {
+                    console.log(data)
+                    friend.siblings = [...this.state.siblings, data[0]]
+                }).then(data => {
+                    console.log(friend.siblings)
+                    this.props.history.push({
+                        pathname: `/friend/${friend.id}`,
+                        state: { kid: kid, friend: friend }
+                    })
+                })
+        })
+    }
+
+   function deleteSibling(e, cd) {
+        debugger
+        const {sibling} = e.target
+        const {kid, friend} = this.props.location.state
+
+        fetch(`${config.API_ENDPOINT}/api/friends/siblings/${sibling.id}`, {
+            method: 'DELETE',
+        })
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(error => {
+                        throw error
+                    })
     }
 
     handleClickCancel = () => {
