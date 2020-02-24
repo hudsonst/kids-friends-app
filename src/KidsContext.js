@@ -8,6 +8,7 @@ const KidsContext = React.createContext({
   addFriend: () => {},
   deleteKid: () => {},
   deleteFriend: () => {},
+  deleteSibling: () => {},
   editKid: () => {},
   editFriend: () => {},
 })

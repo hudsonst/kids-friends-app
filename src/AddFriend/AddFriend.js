@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import KidsContext from '../KidsContext'
 import ValidationError from '../ValidationError'
 //import './AddFriend.css'
+import config from '../config';
 
 class AddFriend extends Component {
     static contextType = KidsContext;
@@ -13,7 +14,7 @@ class AddFriend extends Component {
             touched: false
         },
         last_name: '',
-        age: '',
+        age: null,
         birthday: '',
         allergies: '',
         notes: '',
@@ -35,17 +36,14 @@ class AddFriend extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        // get the form fields from the event
         
         const {kid} = this.props.location.state
         let siblings = e.target.siblings.value
         const { first_name, last_name, pfirst_name, plast_name, age, birthday, allergies, notes } = e.target
         if (siblings) 
         { siblings = siblings.split(', ')}
-        const id = Math.random().toString(36).substring(2, 4)
-        + Math.random().toString(36).substring(2, 4);
+
         const friend = {
-            id,
             first_name: first_name.value,
             last_name: last_name.value,
             pfirst_name: pfirst_name.value,
@@ -55,10 +53,35 @@ class AddFriend extends Component {
             birthday: birthday.value,
             allergies: allergies.value,
             notes: notes.value,
+            kidId: kid.id
         }
+        
+    this.setState({ error: null })
 
+    fetch(`${config.API_ENDPOINT}/api/friends`, {
+      method: 'POST',
+      body: JSON.stringify(friend),
+      headers: {
+        'content-type': 'application/json',
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          return res.json().then(error => {
+            throw error
+          })
+        }
+        return res.json()
+      })
+      .then(data => {
+        //id value added by the server
+        friend.id = data.id
         this.context.addFriend(friend, kid)
         this.props.history.push('/Home')
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
     }
 
     handleClickCancel = () => {

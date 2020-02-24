@@ -1,24 +1,42 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import config from '../config'
 import KidsContext from '../KidsContext'
 
 
 class ShowFriend extends Component {
     static contextType = KidsContext;
 
+    deleteFriend(friend, cd) {
+        fetch(`${config.API_ENDPOINT}/api/friends/${friend.id}`, {
+          method: 'DELETE'
+        })
+          .then(res => {
+            if (!res.ok) {
+              return res.json().then(error => {
+                throw error
+              })
+            }
+          })
+          .then(data => {
+            cd(friend)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      }
+
     handleClickBack = () => {
         this.props.history.push('/Home')
     };
-
 
     render() {
 
         function siblingsList(friend) {
             if (!friend.siblings) { return }
-            const siblingArr = friend.siblings.map((sibling, i) => {
-                const genKey = 'sibNum'
+            const siblingArr = friend.siblings.map((sibling) => {
                 return (
-                    <li key={`${genKey}${i}`}>{sibling}</li>)
+                    <li key={`${sibling.id}`}>{sibling.name}</li>)
             })
 
             return siblingArr
@@ -40,7 +58,6 @@ class ShowFriend extends Component {
                 <section>
                     <h3>Details</h3>
                     Parent: {friend.pfirst_name}{' '}{friend.plast_name}<br />
-                    Parent Email: {friend.pEmail}<br />
                     Age: {friend.age}<br />
                     Birthday: {friend.birthday}<br />
                     Sibling(s): <ul>{siblings}</ul>
@@ -49,7 +66,7 @@ class ShowFriend extends Component {
 
                     <Link to={{pathname: `/editFriend/${friend.id}`, state: {kid: kid, friend: friend}}}><button>Edit</button></Link>
                     <button onClick={this.handleClickBack}>Back</button>
-                    <Link to='/Home'><button onClick={() => this.context.deleteFriend(friend)}>Remove {friend.first_name}</button></Link>
+                    <Link to='/Home'><button onClick={() => {this.deleteFriend(friend, this.context.deleteFriend)}}>Remove {friend.first_name}</button></Link>
                 </section>
 
             </main>

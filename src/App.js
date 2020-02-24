@@ -15,11 +15,13 @@ import Contact from './Contact/Contact'
 import About from './About/About'
 import './App.css'
 
+import config from './config';
+
 class App extends Component {
 
   state = {
-    kids: this.props.store.kids,
-    friends: this.props.store.friends,
+    kids: [],
+    friends: [],
     error: null,
   };
 
@@ -34,6 +36,16 @@ class App extends Component {
     const newKids = kids.filter(ckid => ckid !== kid)
     this.setState({
       kids: newKids
+    })
+  }
+
+  deleteSibling = (sibling, friend) => {
+    const { friends } = this.state
+    const newSibs = friend.siblings.filter(sib => sib.id !== sibling.id )
+    friend.siblings = newSibs
+    const outFriends = friends.filter(cfriend => cfriend.id !== friend.id)
+    this.setState({
+      friends: [...outFriends, friend]
     })
   }
 
@@ -101,6 +113,35 @@ class App extends Component {
 
   }
 
+  
+  componentDidMount() {
+
+    fetch(`${config.API_ENDPOINT}/api/kids/Home`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Something went wrong fetching Home page');
+            }
+            return response
+        })
+        .then(response => response.json())
+        .then(data => {
+            this.setState({ kids: data })
+        })
+
+    fetch(`${config.API_ENDPOINT}/api/friends`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Something went wrong fetching friends');
+            }
+            return response
+        })
+        .then(response => response.json())
+        .then(data => {
+            this.setState({ friends: data })
+        })
+}
+
+
   render() {
 
     const contextValue = {
@@ -109,6 +150,7 @@ class App extends Component {
       addKid: this.addKid,
       addFriend: this.addFriend,
       deleteKid: this.deleteKid,
+      deleteSibling: this.deleteSibling,
       deleteFriend: this.deleteFriend,
       editKid: this.editKid,
       editFriend: this.editFriend,

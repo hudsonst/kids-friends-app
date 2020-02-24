@@ -10,12 +10,15 @@ export default function DisplayKids(props) {
     function friendsfunc(kid) {
 
         const friendArr = kid.friends.map(friend_id => {
-            let currentFriend = friends.find(friend => friend.id === friend_id)
             
+            let currentFriend = friends.find(friend => friend.id === friend_id)
+            if (currentFriend) {
             return (
                 <Link to={{ pathname: `/friend/${friend_id}`, state: { kid: kid, friend: currentFriend } }} key={friend_id}>{currentFriend.first_name}</Link>
 
-            )
+            )} else {
+                return ('')
+            }
         }
         )
         return friendArr;

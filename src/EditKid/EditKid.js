@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ValidationError from '../ValidationError'
 import KidsContext from '../KidsContext';
+import config from '../config'
 
 class EditKid extends Component {
     static contextType = KidsContext;
@@ -13,16 +14,18 @@ class EditKid extends Component {
             touched: false,
         },
         last_name: '',
-        age: '',
+        age: null,
         birthday: '',
         allergies: '',
-        notes:'',
+        notes: '',
     };
 
     updateName(first_name) {
         this.setState({
-            first_name: {value: first_name,
-            touched: true}
+            first_name: {
+                value: first_name,
+                touched: true
+            }
         });
     }
 
@@ -35,7 +38,6 @@ class EditKid extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        // get the form fields from the event
         const { first_name, last_name, age, birthday, allergies, notes } = e.target
         const { kid } = this.props.location.state
         const updatedKid = {
@@ -48,9 +50,28 @@ class EditKid extends Component {
             notes: notes.value,
             friends: kid.friends,
         }
-        this.context.editKid(updatedKid)
-        this.props.history.push('/Home')
+
+        fetch(`${config.API_ENDPOINT}/api/kids/${kid.id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(updatedKid),
+            headers: {
+                'content-type': 'application/json',
+            }
+        })
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(error => {
+                        throw error
+                    })
+                }
+            })
+            .then(data => {
+
+                this.context.editKid(updatedKid)
+                this.props.history.push('/Home')
+            })
     }
+
 
     handleClickCancel = () => {
         this.props.history.push('/Home')
@@ -62,11 +83,11 @@ class EditKid extends Component {
 
     componentDidMount() {
         const { kid } = this.props.location.state
-        
+
         this.setState(
             {
                 id: kid.id,
-                first_name: {value: kid.first_name},
+                first_name: { value: kid.first_name },
                 last_name: kid.last_name,
                 age: kid.age,
                 birthday: kid.birthday,

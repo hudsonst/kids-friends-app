@@ -1,5 +1,0 @@
-Add Friend from Home page
-Say which friend you're adding to on Add Friend Page
-Add back button on Show Friend and Show Kid pages
-Demo button on Home page
-sort kids by first name

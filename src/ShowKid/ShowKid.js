@@ -1,10 +1,30 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import KidsContext from '../KidsContext'
+import config from '../config'
 //import './AddKid.css'
 
 class ShowKid extends Component {
     static contextType = KidsContext;
+
+    deleteKid(kid, cd) {
+        fetch(`${config.API_ENDPOINT}/api/kids/${kid.id}`, {
+          method: 'DELETE'
+        })
+          .then(res => {
+            if (!res.ok) {
+              return res.json().then(error => {
+                throw error
+              })
+            }
+          })
+          .then(data => {
+            cd(kid)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      }
 
     handleClickBack = () => {
         this.props.history.push('/Home')
@@ -23,9 +43,6 @@ class ShowKid extends Component {
             )
             return friendArr;
         }
-
-
-          
 
         const { kid, friends } = this.props.location.state;
         const friendsList = friendsfunc(kid)
@@ -52,9 +69,8 @@ class ShowKid extends Component {
                     <Link to={{ pathname: `/addFriend`, state: { kid: kid } }}><button>Add Friend</button></Link>
                     <Link to={{pathname: `/editKid/${kid.id}`, state: {kid: kid}}}><button>Edit</button></Link>
                     <button onClick={this.handleClickBack}>Back</button>
-                    <Link to='/Home'><button onClick={() => this.context.deleteKid(kid)}>Remove {kid.first_name}</button></Link>
+                    <Link to='/Home'><button onClick={() => {this.deleteKid(kid, this.context.deleteKid)}}>Remove {kid.first_name}</button></Link>
                 </section>
-
             </main>
 
         )

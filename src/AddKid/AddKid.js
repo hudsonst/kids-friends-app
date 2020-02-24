@@ -2,18 +2,20 @@ import React, { Component } from 'react';
 import KidsContext from '../KidsContext'
 import ValidationError from '../ValidationError'
 import './AddKid.css'
+import config from '../config';
 
 class AddKid extends Component {
     static contextType = KidsContext;
 
     state = {
         error: null,
+        id: '',
         first_name: {
             value: '',
             touched: false
         },
         last_name: '',
-        age: '',
+        age: null,
         birthday: '',
         allergies: { value: '' },
         notes: { value: '' },
@@ -35,12 +37,9 @@ class AddKid extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        // get the form fields from the event
         const { first_name, last_name, age, birthday, allergies, notes } = e.target
-        const id = Math.random().toString(36).substring(2, 4)
-        + Math.random().toString(36).substring(2, 4);
+
         const kid = {
-            id,
             first_name: first_name.value,
             last_name: last_name.value,
             age: age.value,
@@ -49,9 +48,33 @@ class AddKid extends Component {
             notes: notes.value,
             friends: [],
         }
+    this.setState({ error: null })
+    fetch(`${config.API_ENDPOINT}/api/kids`, {
+      method: 'POST',
+      body: JSON.stringify(kid),
+      headers: {
+        'content-type': 'application/json',
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          return res.json().then(error => {
+            throw error
+          })
+        }
+        return res.json()
+      })
+      .then(data => {
+        //id value added by the server
+        kid.id = data.id
         this.context.addKid(kid)
         this.props.history.push('/Home')
     }
+)
+      .catch(error => {
+        this.setState({ error })
+      })
+  }
 
     handleClickCancel = () => {
         this.props.history.push('/Home')

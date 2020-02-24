@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import update from 'immutability-helper'
+import DeleteSibling from './DeleteSibling'
 import ValidationError from '../ValidationError'
-import KidsContext from '../KidsContext';
+import config from '../config'
+import KidsContext from '../KidsContext'
 
 class EditFriend extends Component {
     static contextType = KidsContext;
@@ -15,12 +18,14 @@ class EditFriend extends Component {
         last_name: '',
         pfirst_name: '',
         plast_name: '',
-        siblings: '',
-        age: '',
+        siblings: [],
+        age: null,
         birthday: '',
         allergies: '',
         notes: '',
     };
+
+
 
     updateName(first_name) {
         this.setState({
@@ -38,11 +43,9 @@ class EditFriend extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        // get the form fields from the event
         const { first_name, last_name, pfirst_name, plast_name, age, birthday, allergies, notes } = e.target
-        let siblings = e.target.siblings.value
-        if (siblings) { siblings = siblings.split(', ') }
         const { kid, friend } = this.props.location.state
+
         const updatedFriend = {
             id: friend.id,
             first_name: first_name.value,
@@ -50,17 +53,31 @@ class EditFriend extends Component {
             pfirst_name: pfirst_name.value,
             plast_name: plast_name.value,
             age: age.value,
-            siblings,
+            siblings: this.state.siblings,
             birthday: birthday.value,
             allergies: allergies.value,
-            notes: notes.value,
-            friends: friend.friends,
+            notes: notes.value
         }
-        this.context.editFriend(updatedFriend)
-        this.props.history.push({
-            pathname: `/friend/${friend.id}`,
-            state: { kid: kid, friend: updatedFriend }
+
+        fetch(`${config.API_ENDPOINT}/api/friends/${friend.id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(updatedFriend),
+            headers: {
+                'content-type': 'application/json',
+            }
         })
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(error => {
+                        throw error
+                    })
+                }
+            }).then(data => {
+                this.context.editFriend(updatedFriend)
+                this.props.history.push({
+                    pathname: `/friend/${friend.id}`,
+                    state: { kid: kid, friend: updatedFriend }
+                })
             })
     }
 
@@ -89,10 +106,8 @@ class EditFriend extends Component {
                     return res.json()
                 })
                 .then(data => {
-                    console.log(data)
                     friend.siblings = [...this.state.siblings, data[0]]
                 }).then(data => {
-                    console.log(friend.siblings)
                     this.props.history.push({
                         pathname: `/friend/${friend.id}`,
                         state: { kid: kid, friend: friend }
@@ -101,20 +116,6 @@ class EditFriend extends Component {
         })
     }
 
-   function deleteSibling(e, cd) {
-        debugger
-        const {sibling} = e.target
-        const {kid, friend} = this.props.location.state
-
-        fetch(`${config.API_ENDPOINT}/api/friends/siblings/${sibling.id}`, {
-            method: 'DELETE',
-        })
-            .then(res => {
-                if (!res.ok) {
-                    return res.json().then(error => {
-                        throw error
-                    })
-    }
 
     handleClickCancel = () => {
         this.props.history.push('/Home')
@@ -124,27 +125,61 @@ class EditFriend extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    componentDidMount() {
-        const { friend } = this.props.location.state
-        this.setState(
-            {
-                id: friend.id,
-                first_name: { value: friend.first_name },
-                last_name: friend.last_name,
-                pfirst_name: friend.pfirst_name,
-                plast_name: friend.plast_name,
-                siblings: friend.siblings,
-                age: friend.age,
-                birthday: friend.birthday,
-                allergies: friend.allergies,
-                notes: friend.notes,
-            })
-
+    handleSiblingChange = (e) => {
+        const index = Number(e.target.name)
+        this.setState({
+            siblings: update(this.state.siblings, { [index]: { name: { $set: e.target.value } } })
+        })
     }
 
 
+    componentDidMount() {
+        const { friend } = this.props.location.state
+        fetch(`${config.API_ENDPOINT}/api/friends/${friend.id}`, {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(error => {
+                        throw error
+                    })
+                }
+                return res.json()
+            })
+            .then(res => {
+                this.setState(
+                    {
+                        id: friend.id,
+                        first_name: { value: friend.first_name },
+                        last_name: friend.last_name,
+                        pfirst_name: friend.pfirst_name,
+                        plast_name: friend.plast_name,
+                        siblings: friend.siblings,
+                        age: friend.age,
+                        birthday: friend.birthday,
+                        allergies: friend.allergies,
+                        notes: friend.notes,
+                    })
+            })
+            .catch(error => {
+                this.setState({ error })
+            })
+    }
+
+
+
     render() {
-        const { first_name, last_name, pfirst_name, plast_name, age, siblings, birthday, allergies, notes } = this.state
+        const { first_name, last_name, pfirst_name, plast_name, age, birthday, allergies, notes, siblings } = this.state
+        const siblingList = siblings.map((sibling, i) => (
+            <li key={i}>
+                <input type="text" value={sibling.name} name={i} onChange={e => this.handleSiblingChange(e)} />
+            <DeleteSibling sibling={sibling} kid={this.props.location.state.kid} friend={this.props.location.state.friend} history={this.props.history} onClick={this.deleteSibling}/>
+            </li>
+        ))
+
         return (
             <section className='EditFriend'>
                 <header role="banner">
@@ -171,8 +206,6 @@ class EditFriend extends Component {
                     <label htmlFor="age">Age</label>
                     <input type="number" value={age} name='age' id='age' onChange={this.handleChange} />
 
-                    <label htmlFor="siblings">Siblings (seperated by commas)</label>
-                    <input type="text" value={siblings} name='siblings' id='siblings' onChange={this.handleChange} />
 
                     <label htmlFor="birthday">Birthday</label>
                     <input type="text" value={birthday} placeholder="mm/dd" name='birthday' id='birthday' onChange={this.handleChange} />
@@ -183,9 +216,20 @@ class EditFriend extends Component {
                     <label htmlFor="notes">Notes</label>
                     <textarea rows="2" value={notes} cols="50" name='notes' id='notes' onChange={this.handleChange} />
 
+                    <label htmlFor='siblings'>Siblings</label>
+                    <ul className='siblings'>
+                        {siblingList}
+                    </ul>
+
                     <button onClick={this.handleClickCancel}>Cancel</button>
                     <button type='submit'>Update Friend</button>
 
+                </form>
+
+                <form onSubmit={this.handleSibling}>
+                    <label htmlFor='newSiblings'>Add siblings, seperated by commas</label>
+                    <input type="text" name='newSiblings' id='newSiblings'></input>
+                    <button type='submit'>Add Sibling</button>
                 </form>
             </section>
         )
@@ -194,3 +238,7 @@ class EditFriend extends Component {
 }
 
 export default EditFriend;
+
+EditFriend.defaultProps = {
+    siblings: [],
+  }
