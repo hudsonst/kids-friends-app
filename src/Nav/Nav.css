@@ -1,0 +1,13 @@
+nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: #b10dc9;
+    font-weight: bold;
+    font-size: larger;
+    padding: 10px;
+}
+
+nav a{
+    color: #ffd51b;
+    text-decoration: none;
+}

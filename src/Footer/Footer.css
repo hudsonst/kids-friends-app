@@ -1,0 +1,12 @@
+footer {
+    display: flex;
+    justify-content: space-around;
+    background-color: #b10dc9;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+footer a{
+    color: #ffd51b;
+    text-decoration: none;
+}

@@ -1,11 +1,76 @@
-body {
-    padding-left: 10px;
+* {
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+}
+
+main.App {
+    position: relative;
+    width: 80%;
+    background-color: #ffeb3b82;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 25px;
+    border: 10px dashed #b10dc9;
+}
+
+main.App::after {
+        content: "";
+        background-image: url('..\src\img\kids-clipart-silhouette-5-transparent.png');
+        opacity: 0.1;
+        background-repeat: repeat-x;
+        background-size: 60%;
+        top: 40px;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+        z-index: -1;   
+      }
+
+h1, h2, h3 {
+    font-family: 'Bowlby One SC', sans-serif;
+    font-stretch: ultra-expanded;
+    color:#5e5353;;
+    text-shadow: 6px -4px 6px #ffc10752;
 }
 
 label {
     display: block;
 }
+input {
+    margin-bottom: 10px;
+}
+
+a {
+    color:#5e5353;
+    text-decoration: underline;
+} 
+
+
 
 button {
     margin: 5px;
-}
+        background-color: #b10dc9;
+        border: 2px solid;
+        color:#ffdc00;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 4px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition-duration: 0.4s;
+  }
+  
+  button:hover {
+    background-color: #4CAF50;  
+    /* background-color: #ffd51b;
+    color: white; */
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+  }

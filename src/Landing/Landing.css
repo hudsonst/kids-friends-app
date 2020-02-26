@@ -1,0 +1,24 @@
+h3 {
+    text-align: center;
+}
+
+.demo_button {
+    box-shadow: 3px 10px 19px #b10dc9;
+    font-size: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button a {
+    text-decoration: none;
+}
+
+.signup-form {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    padding: 15px;
+    background-color:#ffd51b;
+}

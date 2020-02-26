@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import './Landing.css'
 
 
 
@@ -13,9 +14,10 @@ export default function Landing(props) {
         </section>
         <section>
           <h3>How It Works</h3>
-         <p><Link to="/Home"><button>Demo!</button></Link></p>
+         <Link to="/Home"><button className="demo_button">Demo!</button></Link>
         <p>After you sign up, enter each of your children. Then add their friends! Add parents' names, phone numbers, birthdays, siblings, allergy info, personal notes, etc! Now all of that information, right at your fingertips!</p>
         </section>
+        5px;
         <section>
           <h3>Share with Co-Parents!</h3>
          Text or email info, or invite a co-parent to share your kid's contacts! Export dates into iCal or Google Calendar! (Coming Soon)
