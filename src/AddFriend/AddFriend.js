@@ -98,14 +98,14 @@ class AddFriend extends Component {
                 </header>
 
                 <form className='add-kid-form' onSubmit={this.handleSubmit}>
-                    <label htmlFor="first_name">First name</label>
+                    <label htmlFor="first_name">First Name</label>
                     <input placeholder='First Name' type="text" name='first_name'
-                        id='first_name' required onChange={e => this.updateName(e.target.value)} />
+                        id='first_name' className="firstName" required onChange={e => this.updateName(e.target.value)} />
                     {!this.state.first_name.touched && (
                         <ValidationError message={this.validateName()} />
                     )}
 
-                    <label htmlFor="last_name">Last name</label>
+                    <label htmlFor="last_name"  className="lastName">Last Name</label>
                     <input type="text" name='last_name' id='last_name' placeholder='Last Name' />
                     <label htmlFor="pfirst_name">Parent's First name</label>
                     <input type="text" name='pfirst_name' id='pfirst_name' />
@@ -122,13 +122,13 @@ class AddFriend extends Component {
                     <input type="text" placeholder="mm/dd" name='birthday' id='birthday' />
 
                     <label htmlFor="allergies">Allergies</label>
-                    <textarea rows="2" cols="50" name='allergies' id='allergies' />
+                    <textarea rows="5"  name='allergies' id='allergies' />
 
                     <label htmlFor="notes">Notes</label>
-                    <textarea rows="2" cols="50" name='notes' id='notes' />
+                    <textarea rows="5"  name='notes' id='notes' /><br/><br/>
 
-                    <button onClick={this.handleClickCancel}>Cancel</button>
                     <button type='submit'>Add Friend</button>
+                    <button onClick={this.handleClickCancel}>Cancel</button>
 
                 </form>
             </section>

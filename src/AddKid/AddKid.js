@@ -110,10 +110,10 @@ class AddKid extends Component {
                     <textarea rows="2" cols="50" name='allergies' id='allergies' />
 
                     <label htmlFor="notes">Notes</label>
-                    <textarea rows="2" cols="50" name='notes' id='notes' />
+                    <textarea rows="2" cols="50" name='notes' id='notes' /><br/><br/>
 
-                    <button onClick={this.handleClickCancel}>Cancel</button>
                     <button type='submit'>Add Kid</button>
+                    <button onClick={this.handleClickCancel}>Cancel</button>
 
                 </form>
             </section>

@@ -5,21 +5,22 @@
 
 main.App {
     position: relative;
-    width: 80%;
+    width: 100%;
     background-color: #ffeb3b82;
     margin-right: auto;
     margin-left: auto;
     padding: 25px;
     border: 10px dashed #b10dc9;
+    font-size: 18px;
 }
 
 main.App::after {
         content: "";
         background-image: url('..\src\img\kids-clipart-silhouette-5-transparent.png');
-        opacity: 0.1;
+        opacity: 0.2;
         background-repeat: repeat-x;
         background-size: 60%;
-        top: 40px;
+        top: 60px;
         left: 0;
         bottom: 0;
         right: 0;
@@ -34,19 +35,31 @@ h1, h2, h3 {
     text-shadow: 6px -4px 6px #ffc10752;
 }
 
+header {
+    text-align: center;
+}
+
+.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 label {
     display: block;
+    color:#5e5353;
+    font-weight: bold;
 }
+
 input {
     margin-bottom: 10px;
+    width: 80%;
 }
 
 a {
     color:#5e5353;
     text-decoration: underline;
 } 
-
-
 
 button {
     margin: 5px;
@@ -66,11 +79,84 @@ button {
   
   button:hover {
     background-color: #4CAF50;  
-    /* background-color: #ffd51b;
-    color: white; */
   }
+
+  .add_button {
+    box-shadow: 3px 10px 19px #b10dc9;
+    font-size: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-decoration: none;
+}
+
+a.button_link {
+    text-decoration: none;
+}
 
   ul {
     list-style-type: none;
     margin: 0;
+    padding: 0;
+    text-align: center;
   }
+
+.displayKids li {
+      padding-bottom: 5%; 
+      box-shadow: 0px 15px 14px 0px #cfa73c;
+  }
+
+.siblingList li {
+    text-align: left;
+    margin-left: 10px;
+}
+
+.firstName {
+    margin-bottom: 10px;
+}
+
+textarea { 
+    height: auto;
+    width: 80% 
+}
+
+    .error {
+        margin-top: 2px;
+        font-size: smaller;
+    }
+
+@media only screen and (min-width: 600px) {
+
+    main.App {
+        width: 80%;
+        margin-top: 4%;
+    }
+
+    .details {
+        padding-left: 30%;
+    }
+
+    .buttons {
+        padding-left: 0;
+    }
+
+}
+
+@media only screen and (min-width: 1000px) {
+}
+
+@media only screen and (max-width: 600px) {
+    main.App {
+        width: 100%;
+    }
+
+    main.App:after {
+        background-size: 100%;
+        width: 100%;
+    }
+
+    ul {
+        padding-left: 0;
+    }
+}
+

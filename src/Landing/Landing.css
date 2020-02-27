@@ -1,5 +1,10 @@
-h3 {
+h3.center {
     text-align: center;
+    margin-bottom: 1%;
+}
+
+a.demo_link {
+    text-decoration: none;
 }
 
 .demo_button {
@@ -8,10 +13,6 @@ h3 {
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
-
-button a {
-    text-decoration: none;
 }
 
 .signup-form {

@@ -14,8 +14,8 @@ export default function Home(props) {
                 <>
                     <header role="banner">
                         <h1>Your Kids</h1>
-                        <Link to='/AddKid'>
-                            <button>Add Kid</button>
+                        <Link to='/AddKid' className="button_link">
+                            <button className="add_button ">Add Kid</button>
                         </Link>
                     </header>
                     <section className='displayKids'>
