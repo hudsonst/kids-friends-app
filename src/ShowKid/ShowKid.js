@@ -57,19 +57,20 @@ class ShowKid extends Component {
 
 
                 <section>
-                    <h3>Details</h3>
+                    <h3 className="details">Details</h3>
 
-                    Age: {kid.age}<br />
+                    <p className="details">Age: {kid.age}<br />
                     Birthday: {kid.birthday}<br />
                     Allergies: {kid.allergies}<br />
                     Notes: {kid.notes}<br /><br />
 
-                    Friends: {friendsList}
-
-                    <Link to={{ pathname: `/addFriend`, state: { kid: kid } }}><button>Add Friend</button></Link>
+                    Friends: {friendsList}</p>
+                    <div className='buttons center'>
+                    <Link to={{ pathname: `/addFriend`, state: { kid: kid } }}><button className='add_friend'>Add Friend</button></Link><br />
                     <Link to={{pathname: `/editKid/${kid.id}`, state: {kid: kid}}}><button>Edit</button></Link>
-                    <button onClick={this.handleClickBack}>Back</button>
+                    <button onClick={this.handleClickBack}>Back</button><br />
                     <Link to='/Home'><button onClick={() => {this.deleteKid(kid, this.context.deleteKid)}}>Remove {kid.first_name}</button></Link>
+                    </div>
                 </section>
             </main>
 

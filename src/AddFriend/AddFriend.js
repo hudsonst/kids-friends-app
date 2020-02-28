@@ -36,12 +36,11 @@ class AddFriend extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        
-        const {kid} = this.props.location.state
+
+        const { kid } = this.props.location.state
         let siblings = e.target.siblings.value
         const { first_name, last_name, pfirst_name, plast_name, age, birthday, allergies, notes } = e.target
-        if (siblings) 
-        { siblings = siblings.split(', ')}
+        if (siblings) { siblings = siblings.split(', ') }
 
         const friend = {
             first_name: first_name.value,
@@ -55,33 +54,33 @@ class AddFriend extends Component {
             notes: notes.value,
             kidId: kid.id
         }
-        
-    this.setState({ error: null })
 
-    fetch(`${config.API_ENDPOINT}/api/friends`, {
-      method: 'POST',
-      body: JSON.stringify(friend),
-      headers: {
-        'content-type': 'application/json',
-      }
-    })
-      .then(res => {
-        if (!res.ok) {
-          return res.json().then(error => {
-            throw error
-          })
-        }
-        return res.json()
-      })
-      .then(data => {
-        //id value added by the server
-        friend.id = data.id
-        this.context.addFriend(friend, kid)
-        this.props.history.push('/Home')
-      })
-      .catch(error => {
-        this.setState({ error })
-      })
+        this.setState({ error: null })
+
+        fetch(`${config.API_ENDPOINT}/api/friends`, {
+            method: 'POST',
+            body: JSON.stringify(friend),
+            headers: {
+                'content-type': 'application/json',
+            }
+        })
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(error => {
+                        throw error
+                    })
+                }
+                return res.json()
+            })
+            .then(data => {
+                //id value added by the server
+                friend.id = data.id
+                this.context.addFriend(friend, kid)
+                this.props.history.push('/Home')
+            })
+            .catch(error => {
+                this.setState({ error })
+            })
     }
 
     handleClickCancel = () => {
@@ -105,7 +104,7 @@ class AddFriend extends Component {
                         <ValidationError message={this.validateName()} />
                     )}
 
-                    <label htmlFor="last_name"  className="lastName">Last Name</label>
+                    <label htmlFor="last_name" className="lastName">Last Name</label>
                     <input type="text" name='last_name' id='last_name' placeholder='Last Name' />
                     <label htmlFor="pfirst_name">Parent's First name</label>
                     <input type="text" name='pfirst_name' id='pfirst_name' />
@@ -122,14 +121,14 @@ class AddFriend extends Component {
                     <input type="text" placeholder="mm/dd" name='birthday' id='birthday' />
 
                     <label htmlFor="allergies">Allergies</label>
-                    <textarea rows="5"  name='allergies' id='allergies' />
+                    <textarea rows="5" name='allergies' id='allergies' />
 
                     <label htmlFor="notes">Notes</label>
-                    <textarea rows="5"  name='notes' id='notes' /><br/><br/>
-
-                    <button type='submit'>Add Friend</button>
-                    <button onClick={this.handleClickCancel}>Cancel</button>
-
+                    <textarea rows="5" name='notes' id='notes' /><br /><br />
+                    <div className="buttons center">
+                        <button type='submit'>Add Friend</button>
+                        <button onClick={this.handleClickCancel}>Cancel</button>
+                    </div>
                 </form>
             </section>
         )

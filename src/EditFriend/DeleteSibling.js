@@ -29,7 +29,7 @@ return (
     <KidsContext.Consumer>
       {(context) => (
         <Link to={{pathname: `/friend/${friend.id}`, state: {kid: kid, friend: friend}}}><button 
-className='sibling_delete'
+className='sibling'
 onClick={() => deleteSibling(sibling, kid, friend, context.deleteSibling, history )}>
 Delete
 </button>

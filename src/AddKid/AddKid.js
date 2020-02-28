@@ -111,9 +111,11 @@ class AddKid extends Component {
 
                     <label htmlFor="notes">Notes</label>
                     <textarea rows="2" cols="50" name='notes' id='notes' /><br/><br/>
-
+                    
+                    <div className="buttons center">
                     <button type='submit'>Add Kid</button>
                     <button onClick={this.handleClickCancel}>Cancel</button>
+                    </div>
 
                 </form>
             </section>

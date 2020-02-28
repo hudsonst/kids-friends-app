@@ -128,9 +128,11 @@ class EditKid extends Component {
 
                     <label htmlFor="notes">Notes</label>
                     <textarea rows="2" value={notes} cols="50" name='notes' id='notes' onChange={this.handleChange} />
-
+                    
+                    <div className='buttons center'>
                     <button onClick={this.handleClickCancel}>Cancel</button>
                     <button type='submit'>Update Kid</button>
+                    </div>
 
                 </form>
             </section>

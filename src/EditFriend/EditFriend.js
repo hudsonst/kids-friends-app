@@ -4,6 +4,7 @@ import DeleteSibling from './DeleteSibling'
 import ValidationError from '../ValidationError'
 import config from '../config'
 import KidsContext from '../KidsContext'
+import './EditFriend.css'
 
 class EditFriend extends Component {
     static contextType = KidsContext;
@@ -221,15 +222,17 @@ class EditFriend extends Component {
                         {siblingList}
                     </ul>
 
-                    <button onClick={this.handleClickCancel}>Cancel</button>
+                    <div class="buttons center">
+                        
                     <button type='submit'>Update Friend</button>
-
+                    <button onClick={this.handleClickCancel}>Cancel</button>
+                    </div>
                 </form>
 
-                <form onSubmit={this.handleSibling}>
-                    <label htmlFor='newSiblings'>Add siblings, seperated by commas</label>
+                <form class="sibling_add" onSubmit={this.handleSibling}>
+                    <label htmlFor='newSiblings'>Add new siblings, seperated by commas</label>
                     <input type="text" name='newSiblings' id='newSiblings'></input>
-                    <button type='submit'>Add Sibling</button>
+                    <button type='submit' class='sibling'>Add Sibling</button>
                 </form>
             </section>
         )

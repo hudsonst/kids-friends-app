@@ -1,0 +1,37 @@
+
+
+button.sibling {
+        margin: 5px;
+        padding: 11px 28px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 4px;
+        border-radius: 50%;
+        transition-duration: 0.4s;
+  }
+
+  @media only screen and (min-width: 700px) {
+    .edit-friend-form .buttons {
+        margin-top: 22%
+    }
+    
+    .sibling_add {
+    position: absolute;
+    top: 78%;
+    left: 22%;
+    }
+}
+
+
+@media only screen and (max-width: 699px) {
+    .edit-friend-form .buttons {
+        margin-top: 60%
+    }
+    
+    .sibling_add {
+    position: absolute;
+    top: 72%;
+    }
+}
