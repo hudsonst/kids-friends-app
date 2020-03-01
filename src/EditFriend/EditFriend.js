@@ -20,7 +20,7 @@ class EditFriend extends Component {
         pfirst_name: '',
         plast_name: '',
         siblings: [],
-        age: null,
+        age: '',
         birthday: '',
         allergies: '',
         notes: '',
@@ -205,7 +205,7 @@ class EditFriend extends Component {
                     <input type="text" value={plast_name} name='plast_name' id='plast_name' onChange={this.handleChange} />
 
                     <label htmlFor="age">Age</label>
-                    <input type="number" value={age} name='age' id='age' onChange={this.handleChange} />
+                    <input type="number" value={age} name='age' id='age' required onChange={this.handleChange} />
 
 
                     <label htmlFor="birthday">Birthday</label>
@@ -222,17 +222,17 @@ class EditFriend extends Component {
                         {siblingList}
                     </ul>
 
-                    <div class="buttons center">
+                    <div className="buttons center">
                         
                     <button type='submit'>Update Friend</button>
                     <button onClick={this.handleClickCancel}>Cancel</button>
                     </div>
                 </form>
 
-                <form class="sibling_add" onSubmit={this.handleSibling}>
+                <form className="sibling_add" onSubmit={this.handleSibling}>
                     <label htmlFor='newSiblings'>Add new siblings, seperated by commas</label>
                     <input type="text" name='newSiblings' id='newSiblings'></input>
-                    <button type='submit' class='sibling'>Add Sibling</button>
+                    <button type='submit' className='sibling'>Add Sibling</button>
                 </form>
             </section>
         )

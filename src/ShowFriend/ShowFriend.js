@@ -57,18 +57,18 @@ class ShowFriend extends Component {
 
                 <section>
                     <h3 className="details"> Details</h3>
-                   <p className="details">Parent: {friend.pfirst_name}{' '}{friend.plast_name}<br />
-                    Age: {friend.age}<br />
+                    <div className="details">Parent: {friend.pfirst_name}{' '}{friend.plast_name}<br />
                     Birthday: {friend.birthday}<br />
+                    Age: {friend.age}<br/>
                     Sibling(s): <ul className="siblingList">{siblings}</ul>
                     Allergies: {friend.allergies}<br />
-                    Age: {friend.age}<br />
-                    Notes: {friend.notes}<br /><br /></p>
+                    Notes: {friend.notes}</div>
                     <div className='buttons center'>
                     <Link to={{pathname: `/editFriend/${friend.id}`, state: {kid: kid, friend: friend}}}><button>Edit</button></Link>
                     <button onClick={this.handleClickBack}>Back</button><br />
                     <Link to='/Home'><button onClick={() => {this.deleteFriend(friend, this.context.deleteFriend)}}>Remove {friend.first_name}</button></Link>
                     </div>
+                    
                 </section>
 
             </main>

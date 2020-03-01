@@ -51,10 +51,7 @@ label {
     font-weight: bold;
 }
 
-input {
-    margin-bottom: 10px;
-    width: 50%;
-}
+
 
 a {
     color:#5e5353;
@@ -94,6 +91,10 @@ a.button_link {
     text-decoration: none;
 }
 
+.buttons {
+    margin-top: 10px;
+}
+
   ul {
     list-style-type: none;
     margin: 0;
@@ -117,18 +118,21 @@ form {
     width: 80%;
 }
 
-.firstName {
-    margin-bottom: 10px;
-}
 
 textarea { 
     height: auto;
     width: 80% 
 }
 
-    .error {
-        margin-top: 2px;
-        font-size: smaller;
+input {
+    margin-bottom: 10px;
+    width: 50%;
+}
+
+.error {
+    margin-top: 2px;
+    font-size: small;
+    margin-bottom: 10px;
     }
 
 @media only screen and (min-width: 600px) {

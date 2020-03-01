@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import KidsContext from '../KidsContext'
 import ValidationError from '../ValidationError'
-//import './AddFriend.css'
-import config from '../config';
+import config from '../config'
 
 class AddFriend extends Component {
     static contextType = KidsContext;
@@ -14,7 +13,10 @@ class AddFriend extends Component {
             touched: false
         },
         last_name: '',
-        age: null,
+        age: {
+            value: '',
+            touched: false
+        },
         birthday: '',
         allergies: '',
         notes: '',
@@ -27,10 +29,24 @@ class AddFriend extends Component {
         });
     }
 
+    updateAge(age) {
+        this.setState({
+            age: { value: age },
+            touched: true
+        });
+    }
+
     validateName() {
         const name = this.state.first_name.value.trim();
         if (name.length === 0) {
             return 'First Name is required';
+        }
+    }
+
+    validateAge() {
+        const age = this.state.age.value.trim();
+        if (age.length === 0) {
+            return 'Age is required';
         }
     }
 
@@ -106,13 +122,18 @@ class AddFriend extends Component {
 
                     <label htmlFor="last_name" className="lastName">Last Name</label>
                     <input type="text" name='last_name' id='last_name' placeholder='Last Name' />
+
+                    <label htmlFor="age">Age</label>
+                    <input type="number" name='age' id='age' required onChange={e => this.updateAge(e.target.value)} />
+                    {!this.state.age.touched && (
+                        <ValidationError message={this.validateAge()} />
+                    )}
+
                     <label htmlFor="pfirst_name">Parent's First name</label>
                     <input type="text" name='pfirst_name' id='pfirst_name' />
                     <label htmlFor="plast_name">Parent's Last name</label>
                     <input type="text" name='plast_name' id='plast_name' />
 
-                    <label htmlFor="age">Age</label>
-                    <input type="number" name='age' id='age' />
 
                     <label htmlFor="siblings">Siblings (seperated by commas)</label>
                     <input type="text" name='siblings' id='siblings' />

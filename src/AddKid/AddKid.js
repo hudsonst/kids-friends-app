@@ -101,7 +101,7 @@ class AddKid extends Component {
                     <input type="text" name='last_name' id='last_name' placeholder='Last Name' />
 
                     <label htmlFor="age">Age</label>
-                    <input type="number" name='age' id='age' />
+                    <input type="number" name='age' id='age' required />
 
                     <label htmlFor="birthday">Birthday</label>
                     <input type="text" placeholder="mm/dd" name='birthday' id='birthday' />

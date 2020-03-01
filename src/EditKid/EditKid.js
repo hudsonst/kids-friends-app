@@ -14,7 +14,7 @@ class EditKid extends Component {
             touched: false,
         },
         last_name: '',
-        age: null,
+        age: '',
         birthday: '',
         allergies: '',
         notes: '',
@@ -118,7 +118,7 @@ class EditKid extends Component {
                     <input type="text" value={last_name} name='last_name' id='last_name' placeholder='Last Name' onChange={this.handleChange} />
 
                     <label htmlFor="age">Age</label>
-                    <input type="number" value={age} name='age' id='age' onChange={this.handleChange} />
+                    <input type="number" value={age} name='age' id='age' required onChange={this.handleChange} />
 
                     <label htmlFor="birthday">Birthday</label>
                     <input type="text" value={birthday} placeholder="mm/dd" name='birthday' id='birthday' onChange={this.handleChange} />

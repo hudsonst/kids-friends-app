@@ -59,12 +59,12 @@ class ShowKid extends Component {
                 <section>
                     <h3 className="details">Details</h3>
 
-                    <p className="details">Age: {kid.age}<br />
+                    <div className="details">Age: {kid.age}<br />
                     Birthday: {kid.birthday}<br />
                     Allergies: {kid.allergies}<br />
                     Notes: {kid.notes}<br /><br />
 
-                    Friends: {friendsList}</p>
+                    Friends: {friendsList}</div>
                     <div className='buttons center'>
                     <Link to={{ pathname: `/addFriend`, state: { kid: kid } }}><button className='add_friend'>Add Friend</button></Link><br />
                     <Link to={{pathname: `/editKid/${kid.id}`, state: {kid: kid}}}><button>Edit</button></Link>
