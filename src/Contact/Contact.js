@@ -7,7 +7,7 @@ export default function Contact(props) {
             <p>Please contact us with any questions or problems!</p>
             <form>
                 <input type='text'>
-                    
+
                 </input>
             </form>
         </main>

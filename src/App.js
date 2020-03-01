@@ -41,7 +41,7 @@ class App extends Component {
 
   deleteSibling = (sibling, friend) => {
     const { friends } = this.state
-    const newSibs = friend.siblings.filter(sib => sib.id !== sibling.id )
+    const newSibs = friend.siblings.filter(sib => sib.id !== sibling.id)
     friend.siblings = newSibs
     const outFriends = friends.filter(cfriend => cfriend.id !== friend.id)
     this.setState({
@@ -102,7 +102,7 @@ class App extends Component {
 
     const newFriends = this.state.friends.map(cfriend => {
       if (cfriend.id === updatedFriend.id) {
-          cfriend = updatedFriend
+        cfriend = updatedFriend
       }
       return cfriend
     }
@@ -113,33 +113,33 @@ class App extends Component {
 
   }
 
-  
+
   componentDidMount() {
 
     fetch(`${config.API_ENDPOINT}/api/kids/Home`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Something went wrong fetching Home page');
-            }
-            return response
-        })
-        .then(response => response.json())
-        .then(data => {
-            this.setState({ kids: data })
-        })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Something went wrong fetching Home page');
+        }
+        return response
+      })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ kids: data })
+      })
 
     fetch(`${config.API_ENDPOINT}/api/friends`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Something went wrong fetching friends');
-            }
-            return response
-        })
-        .then(response => response.json())
-        .then(data => {
-            this.setState({ friends: data })
-        })
-}
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Something went wrong fetching friends');
+        }
+        return response
+      })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ friends: data })
+      })
+  }
 
 
   render() {

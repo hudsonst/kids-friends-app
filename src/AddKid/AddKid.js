@@ -48,33 +48,33 @@ class AddKid extends Component {
             notes: notes.value,
             friends: [],
         }
-    this.setState({ error: null })
-    fetch(`${config.API_ENDPOINT}/api/kids`, {
-      method: 'POST',
-      body: JSON.stringify(kid),
-      headers: {
-        'content-type': 'application/json',
-      }
-    })
-      .then(res => {
-        if (!res.ok) {
-          return res.json().then(error => {
-            throw error
-          })
-        }
-        return res.json()
-      })
-      .then(data => {
-        //id value added by the server
-        kid.id = data.id
-        this.context.addKid(kid)
-        this.props.history.push('/Home')
+        this.setState({ error: null })
+        fetch(`${config.API_ENDPOINT}/api/kids`, {
+            method: 'POST',
+            body: JSON.stringify(kid),
+            headers: {
+                'content-type': 'application/json',
+            }
+        })
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(error => {
+                        throw error
+                    })
+                }
+                return res.json()
+            })
+            .then(data => {
+                //id value added by the server
+                kid.id = data.id
+                this.context.addKid(kid)
+                this.props.history.push('/Home')
+            }
+            )
+            .catch(error => {
+                this.setState({ error })
+            })
     }
-)
-      .catch(error => {
-        this.setState({ error })
-      })
-  }
 
     handleClickCancel = () => {
         this.props.history.push('/Home')
@@ -110,11 +110,11 @@ class AddKid extends Component {
                     <textarea rows="2" cols="50" name='allergies' id='allergies' />
 
                     <label htmlFor="notes">Notes</label>
-                    <textarea rows="2" cols="50" name='notes' id='notes' /><br/><br/>
-                    
+                    <textarea rows="2" cols="50" name='notes' id='notes' /><br /><br />
+
                     <div className="buttons center">
-                    <button type='submit'>Add Kid</button>
-                    <button onClick={this.handleClickCancel}>Cancel</button>
+                        <button type='submit'>Add Kid</button>
+                        <button onClick={this.handleClickCancel}>Cancel</button>
                     </div>
 
                 </form>

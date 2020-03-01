@@ -27,10 +27,10 @@ export default function Home(props) {
                                     kid={kid}
                                     friends={context.friends}
                                 />
-                        )
+                            )
                             )}
                         </ul>
-              
+
                     </section>
                 </>)}
         </KidsContext.Consumer>

@@ -177,7 +177,7 @@ class EditFriend extends Component {
         const siblingList = siblings.map((sibling, i) => (
             <li key={i}>
                 <input type="text" value={sibling.name} name={i} onChange={e => this.handleSiblingChange(e)} />
-            <DeleteSibling sibling={sibling} kid={this.props.location.state.kid} friend={this.props.location.state.friend} history={this.props.history} onClick={this.deleteSibling}/>
+                <DeleteSibling sibling={sibling} kid={this.props.location.state.kid} friend={this.props.location.state.friend} history={this.props.history} onClick={this.deleteSibling} />
             </li>
         ))
 
@@ -207,7 +207,6 @@ class EditFriend extends Component {
                     <label htmlFor="age">Age</label>
                     <input type="number" value={age} name='age' id='age' required onChange={this.handleChange} />
 
-
                     <label htmlFor="birthday">Birthday</label>
                     <input type="text" value={birthday} placeholder="mm/dd" name='birthday' id='birthday' onChange={this.handleChange} />
 
@@ -223,14 +222,14 @@ class EditFriend extends Component {
                     </ul>
 
                     <div className="buttons center">
-                        
-                    <button type='submit'>Update Friend</button>
-                    <button onClick={this.handleClickCancel}>Cancel</button>
+
+                        <button type='submit'>Update Friend</button>
+                        <button onClick={this.handleClickCancel}>Cancel</button>
                     </div>
                 </form>
 
                 <form className="sibling_add" onSubmit={this.handleSibling}>
-                    <label htmlFor='newSiblings'>Add new siblings, seperated by commas</label>
+                    <label htmlFor='newSiblings'>Add new sibling</label>
                     <input type="text" name='newSiblings' id='newSiblings'></input>
                     <button type='submit' className='sibling'>Add Sibling</button>
                 </form>
@@ -244,4 +243,4 @@ export default EditFriend;
 
 EditFriend.defaultProps = {
     siblings: [],
-  }
+}
