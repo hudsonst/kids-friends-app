@@ -7,6 +7,24 @@ import KidsContext from '../KidsContext'
 class ShowFriend extends Component {
     static contextType = KidsContext;
 
+    state = {
+      friend: ''
+    }
+
+    componentDidMount() {
+      const { friend } = this.props.location.state;
+      fetch(`${config.API_ENDPOINT}/api/friends/${friend.id}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Something went wrong fetching friends page');
+          }
+          return response
+        })
+        .then(response => response.json())
+        .then(data => {
+          this.setState({ friend: data })
+        })}
+
     deleteFriend(friend, cd) {
         fetch(`${config.API_ENDPOINT}/api/friends/${friend.id}`, {
           method: 'DELETE'
@@ -30,6 +48,9 @@ class ShowFriend extends Component {
         this.props.history.push('/Home')
     };
 
+
+
+
     render() {
 
         function siblingsList(friend) {
@@ -43,7 +64,8 @@ class ShowFriend extends Component {
         }
 
 
-        const { kid, friend } = this.props.location.state;
+        const { kid } = this.props.location.state
+        const {friend} = this.state
         const siblings = siblingsList(friend)
 
         return (
