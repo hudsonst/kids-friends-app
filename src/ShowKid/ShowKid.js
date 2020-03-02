@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import KidsContext from '../KidsContext'
 import config from '../config'
-//import './AddKid.css'
 
 class ShowKid extends Component {
   static contextType = KidsContext;
@@ -76,5 +75,19 @@ class ShowKid extends Component {
 
     )
   }
+}
+
+ShowKid.defaultProps = {
+  kid: {
+    id: '',
+    first_name: '',
+    last_name: '',
+    age: '',
+    birthday: '',
+    allergies: '',
+    notes: '',
+    friends: ''
+  },
+  friends: '',
 }
 export default ShowKid
